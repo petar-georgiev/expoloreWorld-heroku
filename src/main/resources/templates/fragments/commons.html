@@ -1,0 +1,83 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="head">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ExploreTheWorld</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/mobile.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.4.0/gpx.min.js">
+    </script>
+</head>
+
+<body>
+<header th:fragment="navigation">
+<a href="/">
+        <img class="img-fluid rounded center" src="/images/logo.png" alt="Explore World" onclick="window.location=`/`">
+</a>
+    <p></p>
+    <nav class="main-nav">
+        <ul>
+            <th:block sec:authorize="!isAuthenticated()">
+                <li>
+                    <a href="/users/login">Login</a>
+                </li>
+                <li>
+                    <a href="/users/register">Register</a>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+            </th:block>
+
+            <th:block sec:authorize="isAuthenticated()">
+                <li>
+                    <a href="/routes/add">Add new route</a>
+                </li>
+                <li>
+                    <a th:href="@{/users/profile/{username} (username = ${#authentication.principal.getUsername()})}">Profile</a>
+                </li>
+                <li>
+                    <a href="/">Admin</a>
+                </li>
+                <li>
+                    <form th:action="@{/users/logout}" th:method="post">
+                        <label>
+                            <input class="btn btn-outline-light" th:type="submit" th:value="LOGOUT"/>
+                        </label>
+                        <div class="text-white">Welcome,
+                            <th:block th:text="${#authentication.principal.getUsername}">X</th:block>
+                            !
+                        </div>
+                    </form>
+                </li>
+            </th:block>
+        </ul>
+    </nav>
+</header>
+</body>
+
+<footer th:fragment="footer"
+        class="footer bg-blur rounded">
+    <div class="container-fluid text-center">
+        <div class="h5 text-white">
+            &copy; Peter's application. All rights reserved.
+        </div>
+    </div>
+</footer>
+</html>
