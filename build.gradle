@@ -5,6 +5,7 @@ plugins {
 }
 
 group = 'com.example'
+sourceCompatibility = "11"
 
 repositories {
     mavenCentral()
@@ -20,7 +21,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.modelmapper:modelmapper:3.1.0'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'org.postgresql:postgresql'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
